@@ -5,7 +5,7 @@ import pandas as pd
 import openai
 import os
 
-
+openai.api_key = os.getenv("OPENAI_API_KEY")
 ###
 st.title("📊 Mi primera App")
 st.caption("Haz preguntas sobre la tabla de diabetes")
