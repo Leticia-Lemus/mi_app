@@ -22,47 +22,52 @@ df = pd.read_csv("diabetes.csv")
 st.dataframe(df)
 
 #Dataframe a texto
-def dataframe_a_contexto(df):
-    return df.to_csv(index=False)
+#def dataframe_a_contexto(df):
+    #return df.to_csv(index=False)
+for msg in st.session_state.messages:
+    st.chat_message(msg["role"]).write(msg["content"])
 
-client = OpenAI(api_key=openai_api_key)
-st.session_state.messages.append({"role": "user", "content": prompt})
-st.chat_message("user").write(prompt)
-response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
-msg = response.choices[0].message.content
-st.session_state.messages.append({"role": "assistant", "content": msg})
-st.chat_message("assistant").write(msg)
+if prompt := st.chat_input():
+    if not openai_api_key:
+        st.info("Please add your OpenAI API key to continue.")
+        st.stop()
+
+    client = OpenAI(api_key=openai_api_key)
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    st.chat_message("user").write(prompt)
+    response = client.chat.completions.create(model="gpt-3.5-turbo", messages=st.session_state.messages)
+    msg = response.choices[0].message.content
+    st.session_state.messages.append({"role": "assistant", "content": msg})
+    st.chat_message("assistant").write(msg)
 
 
 # Función para generar respuesta con OpenAI
-def responder_pregunta(pregunta, contexto_tabla):
-    sistema = (
-        "Eres un asistente que responde únicamente con base en la siguiente tabla de datos.\n"
-        "Si la pregunta no se relaciona con la tabla, responde: 'Lo siento, solo puedo responder preguntas relacionadas con los datos mostrados.'\n\n"
-        "Tabla de datos:\n"
-        f"{contexto_tabla}"
-    )
+#def responder_pregunta(pregunta, contexto_tabla):
+ #   sistema = (
+  #      "Eres un asistente que responde únicamente con base en la siguiente tabla de datos.\n"
+   #     "Si la pregunta no se relaciona con la tabla, responde: 'Lo siento, solo puedo responder preguntas relacionadas con los datos mostrados.'\n\n"
+    ##   f"{contexto_tabla}"
+    #)
 
-    try:
-        respuesta = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "system", "content": sistema},
-                {"role": "user", "content": pregunta}
-            ],
-            temperature=0
-        )
-        return respuesta["choices"][0]["message"]["content"]
-    except Exception as e:
-        return f"Error al conectar con OpenAI: {e}"
+ #   try:
+  #      respuesta = openai.ChatCompletion.create(
+   #         model="gpt-3.5-turbo",
+    #        messages=[
+     #           {"role": "system", "content": sistema},
+      #          {"role": "user", "content": pregunta}
+       #     ],
+        #    temperature=0
+        #)
+        #return respuesta["choices"][0]["message"]["content"]
+   # except Exception as e:
+     #   return f"Error al conectar con OpenAI: {e}"
 
 
-pregunta = st.chat_input("Haz una pregunta sobre la tabla...")
-if pregunta:
-    st.write(f"**Tú:** {pregunta}")
-    contexto = dataframe_a_contexto(df)
-    respuesta = responder_pregunta(pregunta, contexto)
-    st.write(f"**Chatbot:** {respuesta}")
+#pregunta = st.chat_input("Haz una pregunta sobre la tabla...")
+#if pregunta:
+ ##  contexto = dataframe_a_contexto(df)
+  # respuesta = responder_pregunta(pregunta, contexto)
+   # st.write(f"**Chatbot:** {respuesta}")
 
 # Pick a number using a slider
 #number = st.slider("Elige un número", 0, 100)
