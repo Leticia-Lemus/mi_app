@@ -14,7 +14,7 @@ try:
     st.session_state["diabetes_data"] = df  # Guarda el DataFrame en la sesión
     st.sidebar.success("Base de datos diabetes.csv cargada correctamente.")
 except FileNotFoundError:
-    st.sidebar.error("Archivo diabetes.csv no encontrado."
+    st.sidebar.error("Archivo diabetes.csv no encontrado.")
 
 
 st.title("💬 Chatbot")
