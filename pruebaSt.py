@@ -17,8 +17,13 @@ except FileNotFoundError:
     st.sidebar.error("Archivo diabetes.csv no encontrado.")
 
 
-st.title("💬 Chatbot")
-st.caption("🚀 A Streamlit chatbot powered by OpenAI")
+# Interfaz
+st.title("Chatbot con tabla")
+st.write("Datos cargados:")
+st.dataframe(df)
+
+#st.title("💬 Chatbot")
+#st.caption("🚀 A Streamlit chatbot powered by OpenAI")
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
