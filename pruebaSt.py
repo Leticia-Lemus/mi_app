@@ -25,6 +25,9 @@ if "diabetes_data" in st.session_state:
     st.dataframe(st.session_state["diabetes_data"])
 
 
+# Preparar resumen de datos para el contexto
+diabetes_summary = tabulate.tabulate(df.head(5), headers='keys', tablefmt='plain')
+
 #st.title("💬 Chatbot")
 #st.caption("🚀 A Streamlit chatbot powered by OpenAI")
 if "messages" not in st.session_state:
@@ -33,7 +36,8 @@ if "messages" not in st.session_state:
         {
             "role": "system",
             "content": (
-                "Este es un asistente que solo puede responder preguntas sobre los datos de la base diabetes.csv. "
+                "Este es un asistente que solo puede responder preguntas sobre los datos de la base diabetes.csv.\n\n "
+                f"{diabetes_summary}\n\n"
                 "Si la pregunta no está relacionada, responde: "
                 "'Lo siento, solo puedo responder preguntas relacionadas con la información de la base de datos diabetes.'"
             )
