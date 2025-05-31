@@ -24,7 +24,7 @@ st.dataframe(st.session_state["diabetes_data"].head())
 
 # === Definir instrucciones del sistema ===
 columnas = ", ".join(df.columns)
-contexto = f"""Eres un asistente que responde exclusivamente preguntas relacionadas con la base de datos de pacientes con diabetes.
+contexto = f"""Este asistente que responde exclusivamente preguntas relacionadas con la base de datos de pacientes con diabetes.
 Los nombres de las columnas son: {columnas}.
 Solo puedes usar información contenida en esta tabla. Si la pregunta no se relaciona con estos datos, responde:
 "Lo siento, solo puedo responder preguntas relacionadas con la información de la base de datos diabetes."
